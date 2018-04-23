@@ -24,9 +24,9 @@ curl -X DELETE http://localhost:3000/api/heroes/13
 
 
 ## 追加
-curl -X POST http://localhost:3000/api/heroes/  -H "Accept: application/json" -H "Content-type: application/json" -d '{"id":21,"name":"Tanaka"}'
+curl -D - -X POST http://localhost:3000/api/heroes/  -H "Accept: application/json" -H "Content-type: application/json" -d '{"id":21,"name":"Tanaka"}'
 
 ## 更新
-curl -X PUT http://localhost:3000/api/heroes/11   -H "Accept: application/json" -H "Content-type: application/json" -d '{"name":"xxxx"}'
+curl -D - -X PUT http://localhost:3000/api/heroes/   -H "Accept: application/json" -H "Content-type: application/json" -d '{"id":11,"name":"xxxx"}'
 
 

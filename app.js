@@ -11,7 +11,7 @@ app.use(function (req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     res.header("Access-Control-Allow-Methods", "GET,POST,PUT,DELETE");
-    
+
     next();
 });
 
@@ -30,7 +30,7 @@ heroes = [
     { id: 18, name: 'Dr IQ' },
     { id: 19, name: 'Magma' },
     { id: 20, name: 'Tornado' }
-  ];
+];
 
 
 /** 全件取得 */
@@ -43,7 +43,7 @@ app.get("/api/heroes/", function (req, res, next) {
 app.get("/api/heroes/:id", function (req, res, next) {
     console.log('GET /api/heroes/' + req.params.id);
     let i = getIndex(req.params.id);
-    if (i != -1){
+    if (i != -1) {
         res.json(heroes[i]);
         return;
     }
@@ -54,9 +54,9 @@ app.get("/api/heroes/:id", function (req, res, next) {
 app.delete("/api/heroes/:id", function (req, res, next) {
     console.log('DELETE /api/heroes/' + req.params.id);
     let i = getIndex(req.params.id);
-    if (i != -1){
+    if (i != -1) {
         res.json(heroes[i]);
-        heroes.splice(i,1);
+        heroes.splice(i, 1);
         return;
     }
     res.status(404).send('id ' + req.params.id + ' not exist');
@@ -65,12 +65,12 @@ app.delete("/api/heroes/:id", function (req, res, next) {
 /** 追加 */
 app.post("/api/heroes/", function (req, res, next) {
     console.log('POST /api/heroes/' + req.params.id);
-    
+
     var id = req.body.id;
     var name = req.body.name;
     if (id && name) {
         let i = getIndex(id);
-        if (i != -1){
+        if (i != -1) {
             res.status(400).send('id ' + id + ' duplicate');
             return;
         }
@@ -85,7 +85,7 @@ app.post("/api/heroes/", function (req, res, next) {
 app.put("/api/heroes/", function (req, res, next) {
     console.log('PUT /api/heroes/' + req.body.id);
     let i = getIndex(req.body.id);
-    if (i != -1){
+    if (i != -1) {
         heroes[i] = req.body;
         res.json(req.body);
         return;
@@ -95,10 +95,18 @@ app.put("/api/heroes/", function (req, res, next) {
 
 
 function getIndex(id) {
-    for(var i = 0; i < heroes.length; i++){
-        if (heroes[i].id == id){
+    for (var i = 0; i < heroes.length; i++) {
+        if (heroes[i].id == id) {
             return i;
         }
     }
     return -1;
-  }
+}
+
+/** ログインユーザ情報取得 */
+app.get("/api/loginuser", function (req, res, next) {
+    console.log('GET /api/loginuser/');
+    let username = req.get('oidc_claim_preferred_username');
+    if(!username) { username = 'no user'}
+    res.json(username);
+});

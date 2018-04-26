@@ -107,6 +107,8 @@ function getIndex(id) {
 app.get("/api/loginuser", function (req, res, next) {
     console.log('GET /api/loginuser/');
     let username = req.get('oidc_claim_preferred_username');
+
     if(!username) { username = 'no user'}
-    res.json(username);
+    let jsonFormat = {"id":username};
+    res.json(jsonFormat);
 });
